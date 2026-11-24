@@ -6,4 +6,5 @@ test('Invalid login shows error message', async ({page}) => {
     await page.locator('[data-test="password"]').fill('wrongpassword');
     await page.getByRole('button', { name: 'Login' }).click();
     await expect(page.locator('.help-block')).toHaveText('Invalid email or password');
+    
 });

@@ -7,7 +7,7 @@ This is the starting point for Week 2 of the QA bootcamp. During the week you wi
 - Postman (API testing)
 - The Toolshop REST API
 
-There are no tests in this repo. You will write them during the week.
+Playwright UI tests live in `tests/` and can be run with `npm test`.
 
 ## Prerequisites
 
@@ -62,10 +62,16 @@ Run these steps in order from a terminal.
 
 | Folder     | What it is for |
 |------------|----------------|
-| `tests/`   | Your Playwright tests. It is empty for now; you will add tests during the week. |
+| `tests/`   | Playwright UI tests for the home page, invalid login, and product search. |
 | `scripts/` | Helper scripts. `check.ts` checks your setup and is run by `npm run check`. |
 
 ## Scripts
 
 - `npm run check`: checks your `.env` and that you can reach the Toolshop API.
 - `npm test`: runs the Playwright tests in `tests/`.
+
+The current Playwright tests check that:
+
+- The home page has the expected title.
+- An invalid login displays an error message.
+- Searching for pliers returns matching products.
