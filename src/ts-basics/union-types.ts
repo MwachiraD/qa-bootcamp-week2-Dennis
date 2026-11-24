@@ -3,9 +3,10 @@ function kgsToLbs(weight: number | string): number {
     if (typeof weight === "number") {
         return weight * 2.2;
     } else {
-        return parseInt(weight) * 2.2;
+        return Number(weight) * 2.2;
     }
 }
 
 console.log(kgsToLbs(10));
 console.log(kgsToLbs("10"));
+console.log(kgsToLbs("10.5"));
