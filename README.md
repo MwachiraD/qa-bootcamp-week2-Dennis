@@ -75,3 +75,25 @@ The current Playwright tests check that:
 - The home page has the expected title.
 - An invalid login displays an error message.
 - Searching for pliers returns matching products.
+## Week 2 – Day 6: TypeScript Basics
+
+### TypeScript Basics (`src/ts-basics/`)
+
+Practised foundational TypeScript concepts through separate exercises:
+
+- `first-program.ts` – First TypeScript program.
+- `tuples.ts` – Tuple types.
+- `functions.ts` – Function parameters and return types.
+- `objects.ts` – Object types.
+- `type-aliases.ts` – Type aliases.
+- `union-types.ts` – Union types.
+- `optional-chaining.ts` – Safely accessing optional properties.
+
+### Profile Validator (`src/profile-validator.ts`)
+
+Created a typed user profile validator that:
+
+- Defines required and optional profile properties.
+- Handles missing settings and notification preferences safely.
+- Uses optional chaining (`?.`) and nullish coalescing (`??`).
+- Tests three user profiles with different notification settings.
