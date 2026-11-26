@@ -1,99 +1,173 @@
-# QA Bootcamp Week 2 Starter
+# QA Bootcamp – Week 2
 
-This is the starting point for Week 2 of the QA bootcamp. During the week you will use it to practise:
+## Overview
 
-- TypeScript
-- Playwright (UI testing)
-- Postman (API testing)
-- The Toolshop REST API
+This repository contains my Week 2 QA Bootcamp exercises, focusing on TypeScript, Playwright, UI automation, API testing, and test organisation.
 
-Playwright UI tests live in `tests/` and can be run with `npm test`.
+The exercises use the [Practice Software Testing](https://practicesoftwaretesting.com/) application and its API.
 
 ## Prerequisites
 
-Install these before you start:
+- Node.js (LTS)
+- Git
+- Visual Studio Code or another code editor
 
-- [Node.js](https://nodejs.org/) (the current LTS version)
-- [Git](https://git-scm.com/)
-- [VS Code](https://code.visualstudio.com/)
+## Getting the project
+
+Clone the repository and enter the project directory:
+
+```bash
+git clone <repository-url>
+cd <repository-folder>
+```
 
 ## Setup
 
-Run these steps in order from a terminal.
+Complete these three steps from the project directory:
 
-1. Clone the repo and open the folder:
-
-   ```bash
-   git clone <repo-url>
-   cd qa-bootcamp-week2-starter
-   ```
-
-2. Install the dependencies:
+1. Install dependencies:
 
    ```bash
    npm install
    ```
 
-3. Install the Chromium browser for Playwright:
+2. Install Playwright Chromium:
 
    ```bash
    npx playwright install chromium
    ```
 
-4. Copy `.env.example` to `.env`:
+3. Create your environment file by copying `.env.example` to `.env`.
 
+   **Windows PowerShell:**
+   ```powershell
+   Copy-Item .env.example .env
+   ```
+
+   **macOS/Linux:**
    ```bash
    cp .env.example .env
    ```
 
-   `.env` already contains the Toolshop website URL (`TOOLSHOP_URL`) and the Toolshop API URL (`TOOLSHOP_API_URL`). Only change them if your trainer gives you different URLs.
+Do not commit your `.env` file. It is excluded through `.gitignore`.
 
-5. Check that your setup works:
+## Running the project
 
-   ```bash
-   npm run check
-   ```
+Run the project checks:
 
-   This sends a GET request to the Toolshop API's `/products` endpoint (no login needed). If everything is set up correctly, it prints your Node version, the HTTP status (200), the number of products, and a last line that says `PASS`.
+```bash
+npm run check
+```
 
-> **Warning:** never commit `.env`. It is where your own settings and, later in the course, your secrets (keys, tokens, passwords) live. It is listed in `.gitignore` so Git ignores it. Do not remove it from there.
+Run the Playwright test suite:
 
-## Folders
+```bash
+npm test
+```
 
-| Folder     | What it is for |
-|------------|----------------|
-| `tests/`   | Playwright UI tests for the home page, invalid login, and product search. |
-| `scripts/` | Helper scripts. `check.ts` checks your setup and is run by `npm run check`. |
+Run a specific test file:
 
-## Scripts
+```bash
+npx playwright test tests/search.spec.ts
+```
 
-- `npm run check`: checks your `.env` and that you can reach the Toolshop API.
-- `npm test`: runs the Playwright tests in `tests/`.
+Open the HTML report:
 
-The current Playwright tests check that:
+```bash
+npx playwright show-report
+```
 
-- The home page has the expected title.
-- An invalid login displays an error message.
-- Searching for pliers returns matching products.
-## Week 2 – Day 6: TypeScript Basics
+Open a recorded trace:
 
-### TypeScript Basics (`src/ts-basics/`)
+```bash
+npx playwright show-trace path/to/trace.zip
+```
 
-Practised foundational TypeScript concepts through separate exercises:
+## Project structure
 
-- `first-program.ts` – First TypeScript program.
-- `tuples.ts` – Tuple types.
-- `functions.ts` – Function parameters and return types.
-- `objects.ts` – Object types.
-- `type-aliases.ts` – Type aliases.
-- `union-types.ts` – Union types.
-- `optional-chaining.ts` – Safely accessing optional properties.
+```text
+.
+├── pages/
+│   └── SearchPage.ts
+├── scripts/
+│   └── check.ts
+├── tests/
+│   ├── api_search.spec.ts
+│   ├── cart-api.spec.ts
+│   ├── home.spec.ts
+│   ├── invalid_login.spec.ts
+│   ├── search.spec.ts
+│   └── search_ui_pom.spec.ts
+├── .env.example
+├── .gitignore
+├── package.json
+├── playwright.config.ts
+└── README.md
+```
 
-### Profile Validator (`src/profile-validator.ts`)
+## Test coverage
 
-Created a typed user profile validator that:
+The test suite contains UI and API test cases.
 
-- Defines required and optional profile properties.
-- Handles missing settings and notification preferences safely.
-- Uses optional chaining (`?.`) and nullish coalescing (`??`).
-- Tests three user profiles with different notification settings.
+### UI tests
+
+- Verify the homepage title.
+- Search for pliers and check the displayed results.
+- Verify invalid login behaviour.
+- Use a Page Object Model (POM) to organise search-page interactions.
+
+### API tests
+
+- Retrieve products and verify the response.
+- Create a cart and add a product.
+- Verify the response when requesting a nonexistent cart.
+
+Some API-dependent tests may be affected by availability or configuration issues on the external training API. These failures should be investigated and reported rather than hidden by weakening the assertions.
+
+## Week 2 learning progress
+
+### Day 6 – TypeScript fundamentals
+
+- Practised TypeScript fundamentals.
+- Worked with types and basic validation.
+- Built a Profile Validator exercise.
+
+### Day 7 – Playwright UI testing
+
+- Created UI tests using Playwright.
+- Practised locating elements and interacting with the application.
+- Added tests covering the homepage, product search, and invalid login.
+
+### Day 8 – Page Object Model and API testing
+
+- Introduced the Page Object Model to separate page interactions from test logic.
+- Created a `SearchPage` class to organise search-page locators and actions.
+- Used the Playwright API request fixture to retrieve products.
+- Asserted the response status and product data.
+
+### Day 9 – API testing, Trace Viewer, and test suites
+
+- Created cart API tests covering cart creation, adding a product, and handling a nonexistent cart.
+- Used `try/finally` to ensure that a created cart is cleaned up after the test.
+- Used Playwright Trace Viewer to inspect a deliberately failing test.
+- Distinguished a test assertion problem from an application or environment problem.
+- Ran the test suite and investigated failures.
+- Reported the external API availability issue to the trainer.
+
+## API availability note
+
+During Day 9 testing, requests to the training cart API returned generic Apache error responses instead of the expected API responses.
+
+The products endpoint also returned an Apache access error in the browser. Trace Viewer inspection showed a failed/cancelled products request during the UI search exercise.
+
+These observations were reported to the trainer for investigation. The expected API assertions have been retained rather than changed to accommodate the unexpected server responses.
+
+## Configuration
+
+Playwright is configured to:
+
+- Discover tests in the `tests/` directory.
+- Run tests using Chromium.
+- Use the configured application base URL.
+- Record traces for test execution to support debugging.
+
