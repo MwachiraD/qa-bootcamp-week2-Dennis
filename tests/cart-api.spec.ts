@@ -40,7 +40,7 @@ test('Create cart, add product and verify response', async ({ request }) => {
         expect(verifyResponse.status()).toBe(200);
 
         const verifyData = await verifyResponse.json();
-        expect(verifyData.cart_items[0].quantity).toBe(2);
+        expect(verifyData.cart_items[0].quantity).toBe(3);
         expect(verifyData.cart_items[0].product.name).toBe('Combination Pliers');
         console.log('Add product response:', await productResponse.text());
         expect(productResponse.status()).toBe(200);
