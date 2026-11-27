@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-import { SearchPage } from '../pages/SearchPage';
 
 test('Products API returns products successfully', async ({ request, page }) => {
     // Your implementation here
